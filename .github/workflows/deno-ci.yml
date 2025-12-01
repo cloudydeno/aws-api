@@ -22,7 +22,7 @@ jobs:
 
     steps:
     - name: Checkout source
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Use Deno ${{ matrix.deno-version }}
       uses: denoland/setup-deno@v2
@@ -62,7 +62,7 @@ jobs:
     name: Check JSR Publish
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - uses: denoland/setup-deno@v2
       with:
@@ -84,7 +84,7 @@ jobs:
       id-token: write
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - uses: denoland/setup-deno@v2
       with:
@@ -108,7 +108,7 @@ jobs:
 
     steps:
     - name: Checkout source
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Use Deno ${{ matrix.deno-version }}
       uses: denoland/setup-deno@v2
@@ -145,7 +145,7 @@ jobs:
 
     steps:
     - name: Checkout source, incl aws-sdk-js
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         submodules: true
 
@@ -186,7 +186,7 @@ jobs:
 
     steps:
     - name: Checkout source
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         submodules: true
 
