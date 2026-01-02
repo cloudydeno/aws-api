@@ -206,7 +206,7 @@ jobs:
       run: time ./generation/script/update-all.sh
 
     - name: Perhaps create PR
-      uses: peter-evans/create-pull-request@v7
+      uses: peter-evans/create-pull-request@v8
       with:
         branch: regen-bundled-services
         delete-branch: true
