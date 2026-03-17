@@ -23,6 +23,7 @@ Deno.serve({
     response = ResponseError(e);
   }
   response.headers.set("server", "aws_api-generation/v0.4.0");
+  console.log('Returning', response.status, 'to', request.method, request.url);
   return response;
 }));
 
