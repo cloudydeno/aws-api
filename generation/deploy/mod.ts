@@ -16,14 +16,17 @@ Deno.serve({
 }, httpTracer(async (request, connInfo) => {
   const span = trace.getActiveSpan();
   let response: Response;
+  if (request.headers.get('user-agent') == 'Deno/1.36.2') {
+    response = new Response('enhance your calm', {status: 420});
+  }
   try {
-    response = await routeRequest(request);
+    response ??= await routeRequest(request);
   } catch (e: unknown) {
     span?.recordException(e as Error);
     response = ResponseError(e);
   }
   response.headers.set("server", "aws_api-generation/v0.4.0");
-  console.log('Returning', response.status, 'to', request.method, request.url, 'from', connInfo.remoteAddr, request.headers.get('user-agent'));
+  console.log('Returning', response.status, 'to', request.method, request.url, 'from', connInfo.remoteAddr.hostname, request.headers.get('user-agent'));
   return response;
 }));
 
