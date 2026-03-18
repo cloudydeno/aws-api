@@ -13,7 +13,7 @@ import { routeMap as robotsRoutes } from './routes/robots.ts';
 Deno.serve({
   hostname: '[::]',
   onError: ResponseError,
-}, httpTracer(async (request) => {
+}, httpTracer(async (request, connInfo) => {
   const span = trace.getActiveSpan();
   let response: Response;
   try {
@@ -23,7 +23,7 @@ Deno.serve({
     response = ResponseError(e);
   }
   response.headers.set("server", "aws_api-generation/v0.4.0");
-  console.log('Returning', response.status, 'to', request.method, request.url);
+  console.log('Returning', response.status, 'to', request.method, request.url, 'from', connInfo.remoteAddr, request.headers.get('user-agent'));
   return response;
 }));
 
