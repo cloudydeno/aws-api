@@ -23,8 +23,12 @@ export class HelperLibrary {
   }
 
   useHelper(name: string) {
-    if (!this.#helpers.has(name)) throw new Error(
+    const helper = this.#helpers.get(name);
+    if (!helper) throw new Error(
       `TODO: helper ${name} isn't known`);
+    for (const item of helper.requires ?? []) {
+      this.useHelper(item);
+    }
     this.#inUse.add(name);
   }
 
@@ -65,6 +69,7 @@ export class HelperLibrary {
 
 export interface Helper {
   chunks: string[];
+  requires?: Array<string>;
   deps?: Record<string,string>;
 }
 
@@ -99,8 +104,9 @@ export const SerializeBlob: Helper = {
   deps: {
     Base64: "https://deno.land/std@0.177.0/encoding/base64.ts",
   },
+  requires: ['ByteArray'],
   chunks: [
-    `function serializeBlob(input: string | Uint8Array | null | undefined) {`,
+    `function serializeBlob(input: string | ByteArray | null | undefined) {`,
     `  if (input == null) return input;`,
     `  return Base64.encode(input);`,
     `}`,
@@ -122,8 +128,9 @@ export const SerializeBlobJSR: Helper = {
   deps: {
     Base64: "jsr:@std/encoding@1.0.10/base64",
   },
+  requires: ['ByteArray'],
   chunks: [
-    `function serializeBlob(input: string | Uint8Array | null | undefined) {`,
+    `function serializeBlob(input: string | ByteArray | null | undefined) {`,
     `  if (input == null) return input;`,
     `  return Base64.encodeBase64(input);`,
     `}`,
@@ -156,6 +163,12 @@ export const IdemptTokenMock: Helper = {
   ],
 };
 
+export const ByteArrayType: Helper = {
+  chunks: [
+    `type ByteArray = ReturnType<Uint8Array["slice"]>;`,
+  ],
+};
+
 export function makeHelperLibrary(opts: {
   isTest: boolean;
   useJsr: boolean;
@@ -172,6 +185,8 @@ export function makeHelperLibrary(opts: {
   lib.addHelper('generateIdemptToken', opts.isTest
     ? IdemptTokenMock
     : IdemptToken);
+
+  lib.addHelper('ByteArray', ByteArrayType);
 
   if (opts.useJsr) {
     lib.addHelper('hashMD5', HashMD5JSR);

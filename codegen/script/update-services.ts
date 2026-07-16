@@ -2,8 +2,10 @@ import { CsvParseStream } from "@std/csv/parse-stream";
 import { CsvStringifyStream } from "@std/csv/stringify-stream";
 import { join as joinPath } from "@std/path/join";
 
-import ServiceCodeGen from '../code-gen.ts';
-import type * as Schema from '../sdk-schema.ts';
+import ServiceCodeGen from '../lib/code-gen.ts';
+import type * as Schema from '../lib/sdk-schema.ts';
+import { sdk } from "./sdk.ts";
+import { ServiceMetadata } from "@cloudydeno/aws-codegen/sdk-schema.ts";
 
 const header = [
   "service", "version", "fullname", "id", "namespace", "protocol",
@@ -32,7 +34,7 @@ const services: Record<string, ServiceEntry> = {};
   }
 }
 
-const serviceList = JSON.parse(await Deno.readTextFile('./aws-sdk-js/apis/metadata.json')) as Record<string, Schema.ServiceMetadata & {modId: string}>;
+const serviceList = await sdk.getServiceList() as Record<string, ServiceMetadata & {modId: string}>;
 for (const [modId, svc] of Object.entries(serviceList)) {
   svc.modId = modId;
 }
@@ -45,12 +47,9 @@ for (const svc of Object.values(serviceList)) {
 const opts = new URLSearchParams();
 opts.set('aws_api_root', '../..');
 
-const specSuffix = `.normal.json`;
 const specificServices = Deno.args[0]?.split(',');
 const relevantServices = new Map<string,ServiceEntry>();
-for await (const entry of Deno.readDir(`./aws-sdk-js/apis`)) {
-  if (!entry.name.endsWith(specSuffix)) continue;
-  const uid = entry.name.slice(0, -specSuffix.length);
+for (const uid of await sdk.getSpecList()) {
   const service = uid.slice(0, -11);
   const version = uid.slice(-10);
 
@@ -60,7 +59,7 @@ for await (const entry of Deno.readDir(`./aws-sdk-js/apis`)) {
   }
 
   if (!(`${service}@${version}` in services)) {
-    const apiSpec = JSON.parse(await Deno.readTextFile('./aws-sdk-js/apis/'+entry.name)) as Schema.Api;
+    const apiSpec = await sdk.getRawApiSpec(service, version, 'normal', 'required') as Schema.Api;
 
     services[`${service}@${version}`] = {
       service, version,
@@ -82,13 +81,12 @@ for await (const entry of Deno.readDir(`./aws-sdk-js/apis`)) {
 }
 
 for (const svc of relevantServices.values()) {
-  const uid = `${svc.service}-${svc.version}`;
   svc.id = serviceList[svc.service].modId;
   svc.namespace = serviceList[svc.service].name;
 
   let modPath: string;
   try {
-    modPath = await generateApi('aws-sdk-js/apis', uid, svc.namespace, svc.id);
+    modPath = await generateApi(svc.service, svc.version, svc.namespace, svc.id);
     svc.generated = 'ok';
   } catch (err) {
     console.log(`${svc.service}@${svc.version}`, 'build fail:', (err as Error).message);
@@ -133,20 +131,10 @@ for (const svc of relevantServices.values()) {
     .pipeTo(fOut.writable);
 }
 
-async function generateApi(apisPath: string, apiUid: string, namespace: string, serviceId: string): Promise<string> {
-  const jsonPath = (suffix: string) =>
-    joinPath(apisPath, `${apiUid}.${suffix}.json`);
-  const maybeReadFile = (path: string): Promise<string | null> =>
-    Deno.readTextFile(path).catch(err => {
-      if (err.name === 'NotFound') return null;
-      return Promise.reject(err);
-    });
+async function generateApi(apiId: string, apiVersion: string, namespace: string, serviceId: string): Promise<string> {
 
-  const codeGen = new ServiceCodeGen({
-    api: JSON.parse(await Deno.readTextFile(jsonPath('normal'))) as Schema.Api,
-    pagers: JSON.parse(await maybeReadFile(jsonPath('paginators')) ?? 'null') as Schema.Pagination,
-    waiters: JSON.parse(await maybeReadFile(jsonPath('waiters2')) ?? 'null') as Schema.Waiters,
-  }, opts);
+  const codeGen = await ServiceCodeGen.loadFromSdk(sdk, apiId, apiVersion, opts);
+
   const modCode = codeGen.generateModTypescript(namespace);
   const structsCode = codeGen.generateStructsTypescript();
 
@@ -155,7 +143,7 @@ async function generateApi(apisPath: string, apiUid: string, namespace: string, 
   console.log('Writing', serviceId);
 
   const modPath = joinPath('lib', 'services', serviceId);
-  await new Deno.Command('mkdir', {args: ['-p', modPath]}).output();
+  await Deno.mkdir(modPath, { recursive: true });
   await Deno.writeTextFile(modPath+'/mod.ts', modCode);
   await Deno.writeTextFile(modPath+'/structs.ts', structsCode);
   return modPath+'/mod.ts';

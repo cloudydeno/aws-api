@@ -149,19 +149,20 @@ export class StructEmitter {
       case 'timestamp':
         return 'Date | number';
       case 'blob':
+        this.helpers.useHelper('ByteArray');
         if (this.streamingResponses) {
           if (opts.tags?.has('input')) {
             // if (opts.isBodyStream) throw new Error(`TODO: streaming inputs? (${shape.name})`);
-            return 'Uint8Array | string'; // used for inputs, so let's accept a union
+            return 'ByteArray | string'; // used for inputs, so let's accept a union
           }
-          if (opts.isBodyStream) return 'ReadableStream<Uint8Array>';
-          return 'Uint8Array'; // only used for outputs, we will always give bytes
+          if (opts.isBodyStream) return 'ReadableStream<ByteArray>';
+          return 'ByteArray'; // only used for outputs, we will always give bytes
         } else {
           // Legacy logic for codegen v0.3 and earlier
           if (opts.tags?.has('output') && !opts.tags?.has('input')) {
-            return 'Uint8Array';
+            return 'ByteArray';
           }
-          return 'Uint8Array | string';
+          return 'ByteArray | string';
         }
       default:
         console.log('TODO:', shape);

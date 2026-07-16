@@ -1,3 +1,5 @@
+import type { ByteArray } from "@cloudydeno/aws-api/client/common.ts";
+
 // Things that JSON can encode directly
 export type JSONPrimitive = string | number | boolean | null | undefined;
 export type JSONValue = JSONPrimitive | JSONObject | JSONArray;
@@ -23,7 +25,7 @@ type ResolveFieldTypeIn<
     : U extends 'n' ? number
     : U extends 'b' ? boolean
     : U extends 'd' ? Date
-    : U extends 'a' ? Uint8Array
+    : U extends 'a' ? ByteArray
     : never,
 > = T extends [any] ? V[] : V;
 
@@ -166,7 +168,7 @@ export function readJsonValueBase64(input: JSONValue): JSONValue {
 }
 
 // from https://deno.land/std@0.140.0/encoding/base64.ts
-function decodeBase64(b64: string): Uint8Array {
+function decodeBase64(b64: string): ByteArray {
   const binString = atob(b64);
   const size = binString.length;
   const bytes = new Uint8Array(size);

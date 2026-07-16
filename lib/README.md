@@ -262,7 +262,7 @@ Multiple bits are *missing*:
 
 [//]: # (Generated Content Barrier)
 
-All API definitions are current as of [aws-sdk-js `v2.1692.0`](https://github.com/aws/aws-sdk-js/releases/tag/v2.1692.0).
+All API definitions are current as of [aws-sdk-js `v2.1693.0`](https://github.com/aws/aws-sdk-js/releases/tag/v2.1693.0).
 
 | Class | Module | Protocol |
 | --- | --- | --- |

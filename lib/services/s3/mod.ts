@@ -7,11 +7,12 @@ import * as client from "../../client/common.ts";
 import * as cmnP from "../../encoding/common.ts";
 import * as xmlP from "../../encoding/xml.ts";
 import type * as s from "./structs.ts";
+type ByteArray = ReturnType<Uint8Array["slice"]>;
 function hashMD5(data: BufferSource | string): string {
   const hashed = HashMd5.md5(data);
   return Base64.encodeBase64(hashed);
 }
-function serializeBlob(input: string | Uint8Array | null | undefined) {
+function serializeBlob(input: string | ByteArray | null | undefined) {
   if (input == null) return input;
   return Base64.encodeBase64(input);
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run --watch --allow-env --allow-net --allow-read --allow-sys
 
 import { ResponseError, ResponseText } from "./helpers.ts";
-import { httpTracer, trace } from "./tracer.ts";
+import { trace } from "./tracer.ts";
 
 import { routeMap as unifiedModuleRoutes } from "./routes/unified-module.ts";
 import { routeMap as serviceModuleRoutes } from "./routes/service-module.ts";
@@ -13,7 +13,7 @@ import { routeMap as robotsRoutes } from './routes/robots.ts';
 Deno.serve({
   hostname: '[::]',
   onError: ResponseError,
-}, httpTracer(async (request, connInfo) => {
+}, async (request, connInfo) => {
   const span = trace.getActiveSpan();
   let response: Response;
   if (request.headers.get('user-agent') == 'Deno/1.36.2') {
@@ -26,9 +26,10 @@ Deno.serve({
     response = ResponseError(e);
   }
   response.headers.set("server", "aws_api-generation/v0.4.0");
-  console.log('Returning', response.status, 'to', request.method, request.url, 'from', connInfo.remoteAddr.hostname, request.headers.get('user-agent'));
+  const { remoteAddr } = connInfo;
+  console.log('Returning', response.status, 'to', request.method, request.url, 'from', remoteAddr.transport == 'tcp' ? remoteAddr.hostname : 'unix', request.headers.get('user-agent'));
   return response;
-}));
+});
 
 const routeMap = new Map([
   // Might as well put module rendering first in the list because it needs the most CPU time

@@ -1,11 +1,25 @@
-import type * as Schema from '../sdk-schema.ts';
+import type * as Schema from '../lib/sdk-schema.ts';
 import { cachedFetch } from "./cache.ts";
 import { ClientError, jsonTemplate } from "./helpers.ts";
 import { runAsyncSpan } from "./tracer.ts";
 
 const specSuffix = `.normal.json`;
 
-export class SDK {
+type CachableFetch = (mode: "immutable" | "mutable", label: string, url: string) => Promise<Response>;
+interface SdkDatasource {
+  getServiceList(): Promise<Record<string, Schema.ServiceMetadata>>;
+  getSpecList(): Promise<string[]>;
+  getLatestApiVersion(modId: string): Promise<string>;
+  getRawApiSpec(apiId: string, apiVersion: string, suffix: keyof ApiSpecSet, policy: ApiSpecPolicy): Promise<unknown>;
+  getApiSpecs(apiId: string, apiVersion: string, suffixes: Partial<Record<keyof ApiSpecSet, ApiSpecPolicy>>): Promise<{
+    normal: Schema.Api;
+    paginators: Schema.Pagination;
+    waiters2: Schema.Waiters;
+    examples: Schema.Examples;
+  }>;
+}
+
+export class SDK implements SdkDatasource {
   static async getSdkVersions(): Promise<Array<{
     name: string;
     commit: { sha: string; url: string; };

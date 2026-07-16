@@ -1,4 +1,4 @@
-import { parseXml, XmlNode } from "../lib/encoding/xml.ts";
+import { parseXml, XmlNode } from "@cloudydeno/aws-api/encoding/xml.ts";
 
 export function genDocsComment(docsXml: string, indentation: string, mode: 'short' | 'full') {
   const s = indentation;

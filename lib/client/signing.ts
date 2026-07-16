@@ -3,6 +3,7 @@
 import {
   Signer, Credentials,
   hmacSha256, hashSha256, bytesAsHex,
+  ByteArray,
 } from "./common.ts";
 
 const ANY_BUT_DIGITS_T = /[^\dT]/g;
@@ -74,7 +75,7 @@ export class AWSSignerV4 implements Signer {
     headers.set("host", new URL(request.url).host);
 
     // we can passthru the request stream if there is already a content hash header
-    let body: Uint8Array | ReadableStream<Uint8Array> | null = request.body;
+    let body: ByteArray | ReadableStream<ByteArray> | null = request.body;
     let payloadHash = headers.get('x-amz-content-sha256') ?? '';
     // but there probably isn't a content hash header, so let's handle that..
     if (!payloadHash) {
@@ -171,7 +172,7 @@ export async function getSignatureKey(
   dateStamp: string,
   region: string,
   service: string,
-): Promise<Uint8Array> {
+): Promise<ByteArray> {
   const keyBytes = encoder.encode(key);
   const paddedKey = new Uint8Array(4 + keyBytes.byteLength);
   paddedKey.set(AWS4, 0);

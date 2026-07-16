@@ -14,11 +14,11 @@ jobs:
       fail-fast: false
       matrix:
         deno-version:
-        - v2.0
-        - v2.1
-        - v2.2
-        - v2.3
-        - v2.4
+        - v2.5
+        - v2.6
+        - v2.7
+        - v2.8
+        - v2.9
 
     steps:
     - name: Checkout source
@@ -66,7 +66,7 @@ jobs:
 
     - uses: denoland/setup-deno@v2
       with:
-        deno-version: v2.4
+        deno-version: v2.9
 
     - name: Check publish rules
       run: deno publish --dry-run --allow-dirty
@@ -88,7 +88,7 @@ jobs:
 
     - uses: denoland/setup-deno@v2
       with:
-        deno-version: v2.4
+        deno-version: v2.9
 
     - name: Publish now
       run: deno publish
@@ -101,10 +101,7 @@ jobs:
       fail-fast: false
       matrix:
         deno-version:
-        - v2.1
-        - v2.2
-        - v2.3
-        - v2.4
+        - v2.9
 
     steps:
     - name: Checkout source
@@ -125,9 +122,9 @@ jobs:
     - name: 'Possibly reset lockfile'
       run: deno install || rm deno.lock
 
-    - name: Check generation/deploy/mod.ts
+    - name: Check codegen/server/mod.ts
       if: always()
-      run: time deno check generation/deploy/mod.ts
+      run: time deno check codegen/server/mod.ts
 
   validate-codegen:
     runs-on: ubuntu-latest
@@ -136,11 +133,11 @@ jobs:
     strategy:
       matrix:
         deno-version:
-        - v2.0
-        - v2.1
-        - v2.2
-        - v2.3
-        - v2.4
+        - v2.5
+        - v2.6
+        - v2.7
+        - v2.8
+        - v2.9
       fail-fast: false # run each branch to completion
 
     steps:
@@ -166,11 +163,11 @@ jobs:
 
     - name: Validate aws-sdk fixtures
       if: always()
-      run: time deno run -A generation/script/validate-fixtures.ts
+      run: time deno run -A codegen/script/validate-fixtures.ts
 
     - name: Validate all aws-sdk services
       if: always()
-      run: time deno run -A generation/script/validate-services.ts
+      run: time deno run -A codegen/script/validate-services.ts
 
   regenerate-bundled:
     runs-on: ubuntu-latest
@@ -182,7 +179,7 @@ jobs:
     strategy:
       matrix:
         deno-version:
-        - v2.4
+        - v2.9
 
     steps:
     - name: Checkout source
@@ -203,7 +200,7 @@ jobs:
         restore-keys: deno/${{ matrix.deno-version }}-https/v1-
 
     - name: Regenerate API files
-      run: time ./generation/script/update-all.sh
+      run: time ./codegen/script/update-all.sh
 
     - name: Perhaps create PR
       uses: peter-evans/create-pull-request@v8

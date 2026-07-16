@@ -6,7 +6,8 @@ import * as client from "../../client/common.ts";
 import * as cmnP from "../../encoding/common.ts";
 import * as jsonP from "../../encoding/json.ts";
 import type * as s from "./structs.ts";
-function serializeBlob(input: string | Uint8Array | null | undefined) {
+type ByteArray = ReturnType<Uint8Array["slice"]>;
+function serializeBlob(input: string | ByteArray | null | undefined) {
   if (input == null) return input;
   return Base64.encodeBase64(input);
 }

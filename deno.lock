@@ -4,7 +4,7 @@
     "jsr:@cloudydeno/jmespath@1": "1.0.1",
     "jsr:@cloudydeno/opentelemetry@0.10": "0.10.3",
     "jsr:@cloudydeno/shimmer@1.2.1": "1.2.1",
-    "jsr:@cloudydeno/stream-observables@^1.4.1": "1.4.1",
+    "jsr:@cloudydeno/stream-observables@^1.5.0": "1.5.0",
     "jsr:@sallai/ask@^2.0.2": "2.0.2",
     "jsr:@sallai/iro@^1.0.3": "1.0.4",
     "jsr:@std/assert@1": "1.0.14",
@@ -39,8 +39,8 @@
     "@cloudydeno/shimmer@1.2.1": {
       "integrity": "6d7cf8ba798532a9beb963937977e28e26dbd4e020b38f828a411aaacb34c3b2"
     },
-    "@cloudydeno/stream-observables@1.4.1": {
-      "integrity": "555aa3d786fcfd066d096fc943ea47afc688618e95146e615705e981008f57c0"
+    "@cloudydeno/stream-observables@1.5.0": {
+      "integrity": "1fb2c5149186a7947e969da35294439c86aa44806f661d97ed2e81f63d87f8ba"
     },
     "@sallai/ask@2.0.2": {
       "integrity": "8a1d3cfe5f5a1d4b1e66412c7537f8879b8e70b949076ae9d2e05cff4a82ab42",
@@ -204,9 +204,14 @@
       "jsr:@std/path@1"
     ],
     "members": {
+      "codegen/server": {
+        "dependencies": [
+          "npm:http-cache-semantics@4.2.0"
+        ]
+      },
       "lib": {
         "dependencies": [
-          "jsr:@cloudydeno/stream-observables@^1.4.1",
+          "jsr:@cloudydeno/stream-observables@^1.5.0",
           "jsr:@sallai/ask@^2.0.2",
           "jsr:@std/assert@^1.0.14",
           "jsr:@std/async@^1.0.14",

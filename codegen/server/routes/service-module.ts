@@ -1,7 +1,7 @@
 import { SDK } from "../sdk-datasource.ts";
 import { Generations, ModuleGenerator } from "../generations.ts";
 import { ClientError, escapeTemplate, getModuleIdentity, jsonTemplate, Pattern, ResponseText, RouteHandler, acceptsHtml } from "../helpers.ts";
-import { Api, Examples, Pagination, ServiceMetadata, Waiters } from "../../sdk-schema.ts";
+import { Api, Examples, Pagination, ServiceMetadata, Waiters } from "@cloudydeno/aws-codegen/sdk-schema.ts";
 import { trace, runAsyncSpan } from "../tracer.ts";
 
 const rateLimitMessage = [
