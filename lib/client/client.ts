@@ -9,6 +9,7 @@ import {
   getRequestId,
   EndpointResolver,
   ServiceClientExtras,
+  ByteArray,
 } from './common.ts';
 
 import { readXmlResult, stringify, XmlNode } from "../encoding/xml.ts";
@@ -152,7 +153,7 @@ export class BaseServiceClient implements ServiceClient {
   ) {}
 
   async performRequest(config: ApiRequestConfig & {
-    body?: Uint8Array;
+    body?: ByteArray;
     headers: Headers;
   }): Promise<Response> {
     const headers = config.headers;
@@ -205,7 +206,7 @@ export class XmlServiceClient extends BaseServiceClient {
     const headers = config.headers ?? new Headers;
     headers.append('accept', 'text/xml');
 
-    let reqBody: Uint8Array | undefined;
+    let reqBody: ByteArray | undefined;
     if (config.body instanceof Uint8Array) {
       reqBody = config.body;
 
@@ -217,7 +218,7 @@ export class XmlServiceClient extends BaseServiceClient {
     } else if (config.body) throw new Error(
       `TODO: non-string body to XmlServiceClient`);
 
-    return super.performRequest({
+    return await super.performRequest({
       ...config,
       headers,
       body: reqBody,
@@ -239,7 +240,7 @@ export class JsonServiceClient extends BaseServiceClient {
     headers.append('x-amz-target', `${this.serviceTarget}.${config.action}`);
     headers.append('accept', 'application/x-amz-json-'+this.jsonVersion);
 
-    let reqBody: Uint8Array | undefined;
+    let reqBody: ByteArray | undefined;
     if (config.body instanceof Uint8Array) {
       reqBody = config.body;
 
@@ -248,7 +249,7 @@ export class JsonServiceClient extends BaseServiceClient {
       headers.append('content-type', 'application/x-amz-json-'+this.jsonVersion);
     }
 
-    return super.performRequest({
+    return await super.performRequest({
       ...config,
       headers,
       body: reqBody,
@@ -265,7 +266,7 @@ export class RestJsonServiceClient extends BaseServiceClient {
     const headers = config.headers ?? new Headers;
     headers.append('accept', 'application/json');
 
-    let reqBody: Uint8Array | undefined;
+    let reqBody: ByteArray | undefined;
     if (config.body instanceof Uint8Array) {
       reqBody = config.body;
 
@@ -274,7 +275,7 @@ export class RestJsonServiceClient extends BaseServiceClient {
       headers.append('content-type', 'application/json');
     }
 
-    return super.performRequest({
+    return await super.performRequest({
       ...config,
       headers,
       body: reqBody,
@@ -295,7 +296,7 @@ export class QueryServiceClient extends BaseServiceClient {
 
     const method = config.method ?? 'POST';
 
-    let reqBody: Uint8Array | undefined;
+    let reqBody: ByteArray | undefined;
 
     if (config.body instanceof URLSearchParams) {
       if (method !== 'POST') throw new Error(`query is supposed to be POSTed`);
@@ -311,7 +312,7 @@ export class QueryServiceClient extends BaseServiceClient {
       headers.append('content-type', 'application/x-www-form-urlencoded; charset=utf-8');
     } else if (config.body) throw new Error(`BUG: non-query based request body passed to query client`);
 
-    return super.performRequest({
+    return await super.performRequest({
       ...config,
       headers,
       body: reqBody,

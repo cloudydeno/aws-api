@@ -48,7 +48,7 @@ export interface ApiRequestConfig {
   region?: string;
   headers?: Headers;
   query?: URLSearchParams;
-  body?: URLSearchParams | JSONObject | Uint8Array | string | null;
+  body?: URLSearchParams | JSONObject | ByteArray | string | null;
   /** @deprecated Instead use authType: 'anonymous' */
   skipSigning?: true; // for unauthenticated APIs (STS, cognito)
   authType?: 'anonymous' | 'unsigned-payload';
@@ -159,18 +159,21 @@ export class AwsServiceError extends Error {
 ///////////////////////////////////////////////
 // SHA-256 routines powered by Subtle Crypto
 
+/** An alias for Uint8Array<ArrayBuffer> for Typescript 5.7 */
+export type ByteArray = ReturnType<Uint8Array["slice"]>;
+
 const hmacSha256Alg = { name: 'HMAC', hash: { name: 'SHA-256' } };
 const encoder = new TextEncoder();
 
 /** Generate SHA-256 hash of a string with an HMAC byte-buffer key */
-export async function hmacSha256(key: Uint8Array, body: string): Promise<Uint8Array> {
+export async function hmacSha256(key: ByteArray, body: string): Promise<ByteArray> {
   const cryptoKey = await crypto.subtle.importKey('raw', key, hmacSha256Alg, false, ['sign']);
   const buffer = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(body));
   return new Uint8Array(buffer);
 }
 
 /** Generate SHA-256 hash of a byte-buffer */
-export async function hashSha256(content: Uint8Array): Promise<Uint8Array> {
+export async function hashSha256(content: ByteArray): Promise<ByteArray> {
   const buffer = await crypto.subtle.digest('SHA-256', content);
   return new Uint8Array(buffer);
 }
