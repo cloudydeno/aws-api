@@ -55,4 +55,9 @@ export class SdkFilesystemFetcher extends BaseSdkFetcher implements SdkFetcher {
 
     return JSON.parse(text);
   }
+
+  async getTextFile(path: string): Promise<string> {
+    return await Deno.readTextFile(`aws-sdk-js/${path}`);
+  }
+
 }

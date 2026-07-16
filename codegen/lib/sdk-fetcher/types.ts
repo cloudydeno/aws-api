@@ -12,6 +12,8 @@ export interface SdkFetcher {
     waiters2: Schema.Waiters;
     examples: Schema.Examples;
   }>;
+  /** Escape hatch for e.g. grabbing test files */
+  getTextFile(path: string): Promise<string>;
 }
 
 export type ApiSpecPolicy = 'required' | 'optional';

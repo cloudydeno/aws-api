@@ -87,6 +87,14 @@ export class SdkGithubFetcher extends BaseSdkFetcher implements SdkFetcher {
     }
     return JSON.parse(text);
   }
+
+  async getTextFile(path: string): Promise<string> {
+    const resp = await this.cachedFetch('immutable', `text-file`,
+      `https://raw.githubusercontent.com/aws/aws-sdk-js/${this.sdkVersion}/${path}`);
+    if (!resp.ok) throw new Error(`Received HTTP ${resp.status} fetching ${path}`);
+    return await resp.text();
+  }
+
 }
 
 interface GitTree {

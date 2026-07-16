@@ -1,7 +1,8 @@
-#!/usr/bin/env -S deno run --allow-run=deno --allow-write --allow-read
+#!/usr/bin/env -S deno run --allow-run=deno --allow-write --allow-read --allow-net=raw.githubusercontent.com
 
 import type * as Schema from '../lib/sdk-schema.ts';
 import ServiceCodeGen from '../lib/code-gen.ts';
+import { sdk } from "./sdk.ts";
 
 const testDir = 'lib/testgen/fixtures';
 await Deno.mkdir(testDir, { recursive: true });
@@ -58,8 +59,7 @@ type TestRun = TestRunConfiguration & TestRunCase & { modPath: string; };
 async function *readTestFixtures(filePath: string): AsyncGenerator<TestRun> {
   let caseNum = 0;
   const fileName = filePath.split('/').slice(-2).join('_');
-  const fixtures = JSON.parse(await Deno
-    .readTextFile(filePath)) as ProtocolFixture[];
+  const fixtures = JSON.parse(await sdk.getTextFile(filePath)) as ProtocolFixture[];
 
   for (const fixture of fixtures) {
     const {cases, description, clientEndpoint, ...extras} = fixture;
@@ -114,8 +114,8 @@ async function *readTestFixtures(filePath: string): AsyncGenerator<TestRun> {
 
 async function* readAllTestFixtures() {
   for (const protocol of ['rest-json', 'rest-xml', 'json', 'query', 'ec2']) {
-    yield* readTestFixtures(`aws-sdk-js/test/fixtures/protocol/input/${protocol}.json`);
-    yield* readTestFixtures(`aws-sdk-js/test/fixtures/protocol/output/${protocol}.json`);
+    yield* readTestFixtures(`test/fixtures/protocol/input/${protocol}.json`);
+    yield* readTestFixtures(`test/fixtures/protocol/output/${protocol}.json`);
   }
 }
 const allTestRuns = readAllTestFixtures();

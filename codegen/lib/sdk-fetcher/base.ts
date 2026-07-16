@@ -8,6 +8,7 @@ export abstract class BaseSdkFetcher implements SdkFetcher {
   abstract getServiceList(): Promise<Record<string, Schema.ServiceMetadata>>;
   abstract getSpecList(): Promise<string[]>;
   abstract getRawApiSpec(apiId: string, apiVersion: string, suffix: keyof ApiSpecSet, policy: ApiSpecPolicy): Promise<unknown>;
+  abstract getTextFile(path: string): Promise<string>;
 
   @WrapWithSpan()
   async getApiSpecs(
