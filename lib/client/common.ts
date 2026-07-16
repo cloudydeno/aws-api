@@ -179,6 +179,6 @@ export async function hashSha256(content: ByteArray): Promise<ByteArray> {
 }
 
 /** Return a hex representation of a byte-buffer */
-export function bytesAsHex(buffer: Uint8Array): string {
+export function bytesAsHex(buffer: ByteArray): string {
   return [...buffer].map(x => x.toString(16).padStart(2, '0')).join('');
 }

@@ -1,6 +1,7 @@
+import type { ByteArray } from "@cloudydeno/aws-api/client/common.ts";
 // Downloaded from https://deno.land/x/httpcache@0.1.2/mod.ts
 
-import CachePolicy from "npm:http-cache-semantics@4.2.0";
+import CachePolicy from "http-cache-semantics";
 
 function cacheRequest(req: Request): CachePolicy.Request {
   return {
@@ -11,7 +12,7 @@ function cacheRequest(req: Request): CachePolicy.Request {
 }
 
 export interface CachedResponse {
-  body: Uint8Array;
+  body: ByteArray;
   policy: CachePolicy.CachePolicyObject;
 }
 

@@ -127,9 +127,9 @@ jobs:
     - name: 'Possibly reset lockfile'
       run: deno install || rm deno.lock
 
-    - name: Check generation/deploy/mod.ts
+    - name: Check codegen/server/mod.ts
       if: always()
-      run: time deno check generation/deploy/mod.ts
+      run: time deno check codegen/server/mod.ts
 
   validate-codegen:
     runs-on: ubuntu-latest
@@ -173,11 +173,11 @@ jobs:
 
     - name: Validate aws-sdk fixtures
       if: always()
-      run: time deno run -A generation/script/validate-fixtures.ts
+      run: time deno run -A codegen/script/validate-fixtures.ts
 
     - name: Validate all aws-sdk services
       if: always()
-      run: time deno run -A generation/script/validate-services.ts
+      run: time deno run -A codegen/script/validate-services.ts
 
   regenerate-bundled:
     runs-on: ubuntu-latest
@@ -210,7 +210,7 @@ jobs:
         restore-keys: deno/${{ matrix.deno-version }}-https/v1-
 
     - name: Regenerate API files
-      run: time ./generation/script/update-all.sh
+      run: time ./codegen/script/update-all.sh
 
     - name: Perhaps create PR
       uses: peter-evans/create-pull-request@v8

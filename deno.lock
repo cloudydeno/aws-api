@@ -204,6 +204,11 @@
       "jsr:@std/path@1"
     ],
     "members": {
+      "codegen/server": {
+        "dependencies": [
+          "npm:http-cache-semantics@4.2.0"
+        ]
+      },
       "lib": {
         "dependencies": [
           "jsr:@cloudydeno/stream-observables@^1.5.0",

@@ -8,6 +8,7 @@ import type {
   AbortMultipartUploadRequest, AbortMultipartUploadOutput,
   CompletedPart,
 } from "../services/s3/structs.ts";
+import type { ByteArray } from "../client/common.ts";
 
 /**
  * Uploads a Uint8Array stream of unknown size to an Amazon S3 endpoint.
@@ -25,7 +26,7 @@ import type {
 export async function managedUpload(
   s3: S3Subset,
   params: CreateMultipartUploadRequest & {
-    Body: ReadableStream<Uint8Array>;
+    Body: ReadableStream<ByteArray>;
   },
   config?: {
     queueSize?: number;
@@ -108,14 +109,14 @@ export async function managedUpload(
 
 interface UploadPart {
   seqNumber: number;
-  payload: Uint8Array;
+  payload: ByteArray;
   isFinal: boolean;
 }
-export function newPartSegmenter(partSize: number): TransformStream<Uint8Array, UploadPart> {
+export function newPartSegmenter(partSize: number): TransformStream<ByteArray, UploadPart> {
   let currentPart = new Uint8Array(partSize);
   let byteOffset = 0;
   let nextPartNum = 1;
-  return new TransformStream<Uint8Array, UploadPart>({
+  return new TransformStream<ByteArray, UploadPart>({
     transform(chunk, ctlr) {
       let remaining = chunk;
       while (remaining.byteLength > (currentPart.byteLength - byteOffset)) {
