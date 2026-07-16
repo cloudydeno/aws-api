@@ -1,6 +1,6 @@
-import { just } from "@cloudydeno/stream-observables/sources/just.ts";
-import { collect } from "@cloudydeno/stream-observables/sinks/collect.ts";
-import { map } from "@cloudydeno/stream-observables/transforms/map.ts";
+import { just } from "@cloudydeno/stream-observables/sources/just";
+import { collect } from "@cloudydeno/stream-observables/sinks/collect";
+import { map } from "@cloudydeno/stream-observables/transforms/map";
 import { assertEquals } from "@std/assert/equals";
 
 import { newPartSegmenter } from "./s3-upload.ts";
