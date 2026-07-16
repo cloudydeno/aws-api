@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run --allow-run=deno --allow-write --allow-read
 
-import type * as Schema from '../sdk-schema.ts';
-import ServiceCodeGen from '../code-gen.ts';
+import type * as Schema from '../lib/sdk-schema.ts';
+import ServiceCodeGen from '../lib/code-gen.ts';
 
 const testDir = 'lib/testgen/fixtures';
 await Deno.mkdir(testDir, { recursive: true });

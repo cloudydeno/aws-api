@@ -1,12 +1,13 @@
-import type * as Schema from './sdk-schema.ts';
-import { ShapeLibrary } from './shape-library.ts';
-import { HelperLibrary, makeHelperLibrary } from "./helper-library.ts";
-import { makeProtocolCodegenFor } from "./protocol.ts";
+import type * as Schema from '../lib/sdk-schema.ts';
+import { ShapeLibrary } from '../lib/shape-library.ts';
+import { type HelperLibrary, makeHelperLibrary } from "../lib/helper-library.ts";
+import { makeProtocolCodegenFor } from "../lib/protocol.ts";
 
-import { fixupApiSpec, fixupWaitersSpec } from './quirks.ts';
-import GenWaiter from "./gen-waiter.ts";
-import { generateApiTypescript } from "./gen-api.ts";
-import { StructEmitter } from "./gen-structs.ts";
+import { fixupApiSpec, fixupWaitersSpec } from '../lib/quirks.ts';
+import GenWaiter from "../lib/gen-waiter.ts";
+import { generateApiTypescript } from "../lib/gen-api.ts";
+import { StructEmitter } from "../lib/gen-structs.ts";
+import type { SdkFetcher } from "./sdk-fetcher/types.ts";
 
 export default class ServiceCodeGen {
   apiSpec: Schema.Api;
@@ -26,6 +27,21 @@ export default class ServiceCodeGen {
   stdModRoot: string | null;
   awsApiRoot: string | null;
   shapes: ShapeLibrary;
+
+  static async loadFromSdk(sdk: SdkFetcher, serviceId: string, serviceVersion: string, opts: URLSearchParams) {
+    const apiSpecs = await sdk.getApiSpecs(serviceId, serviceVersion, {
+      normal: 'required',
+      paginators: 'optional',
+      waiters2: 'optional',
+    });
+
+    const codeGen = new ServiceCodeGen({
+      api: apiSpecs.normal,
+      pagers: apiSpecs.paginators,
+      waiters: apiSpecs.waiters2,
+    }, opts);
+    return codeGen;
+  }
 
   constructor(specs: {
     api: Schema.Api,

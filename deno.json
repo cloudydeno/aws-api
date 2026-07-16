@@ -1,9 +1,11 @@
 {
   "tasks": {
-    "deploy:dev": "deno run --watch --allow-env --allow-sys --allow-read --allow-net='[::]:8000,otel.devmode.cloud,api.github.com,raw.githubusercontent.com' generation/deploy/mod.ts"
+    "server:dev": "deno run --watch --allow-env --allow-sys --allow-read --allow-net='[::]:8000,otel.devmode.cloud,api.github.com,raw.githubusercontent.com' codegen/server/mod.ts"
   },
   "workspace": [
-    "./generation",
+    "./codegen/lib",
+    "./codegen/script",
+    "./codegen/server",
     "./lib"
   ],
   "imports": {

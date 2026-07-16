@@ -1,7 +1,8 @@
 import { CsvParseStream } from "@std/csv/parse-stream";
+import { sdk } from "./sdk.ts";
 
-const sdk = JSON.parse(await Deno.readTextFile('aws-sdk-js/package.json'));
-const header = `All API definitions are current as of [aws-sdk-js \`v${sdk.version}\`](https://github.com/aws/aws-sdk-js/releases/tag/v${sdk.version}).`;
+const sdkVersion = await sdk.getSdkVersion();
+const header = `All API definitions are current as of [aws-sdk-js \`${sdkVersion}\`](https://github.com/aws/aws-sdk-js/releases/tag/${sdkVersion}).`;
 
 const genBarrier = `
 

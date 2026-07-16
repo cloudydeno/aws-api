@@ -1,6 +1,6 @@
-import LatestCodeGen from '../code-gen.ts';
+import LatestCodeGen from '../lib/code-gen.ts';
 
-import * as Schema from '../sdk-schema.ts';
+import * as Schema from '../lib/sdk-schema.ts';
 
 interface ApiSpecsBundle {
   api: Schema.Api;

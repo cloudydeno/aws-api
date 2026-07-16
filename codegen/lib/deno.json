@@ -1,0 +1,7 @@
+{
+  "name": "@cloudydeno/aws-codegen",
+  "exports": {
+    "./sdk-fetcher/from-github.ts": "./sdk-fetcher/from-github.ts",
+    "./sdk-schema.ts": "./sdk-schema.ts"
+  }
+}
