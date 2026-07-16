@@ -19,6 +19,11 @@ jobs:
         - v2.2
         - v2.3
         - v2.4
+        - v2.5
+        - v2.6
+        - v2.7
+        - v2.8
+        - v2.9
 
     steps:
     - name: Checkout source
@@ -66,7 +71,7 @@ jobs:
 
     - uses: denoland/setup-deno@v2
       with:
-        deno-version: v2.4
+        deno-version: v2.9
 
     - name: Check publish rules
       run: deno publish --dry-run --allow-dirty
@@ -88,7 +93,7 @@ jobs:
 
     - uses: denoland/setup-deno@v2
       with:
-        deno-version: v2.4
+        deno-version: v2.9
 
     - name: Publish now
       run: deno publish
@@ -101,10 +106,7 @@ jobs:
       fail-fast: false
       matrix:
         deno-version:
-        - v2.1
-        - v2.2
-        - v2.3
-        - v2.4
+        - v2.9
 
     steps:
     - name: Checkout source
@@ -141,6 +143,11 @@ jobs:
         - v2.2
         - v2.3
         - v2.4
+        - v2.5
+        - v2.6
+        - v2.7
+        - v2.8
+        - v2.9
       fail-fast: false # run each branch to completion
 
     steps:
@@ -182,7 +189,7 @@ jobs:
     strategy:
       matrix:
         deno-version:
-        - v2.4
+        - v2.9
 
     steps:
     - name: Checkout source
