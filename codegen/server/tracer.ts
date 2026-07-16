@@ -4,14 +4,6 @@ import { LogicTracer } from "@cloudydeno/opentelemetry/instrumentation/async.ts"
 import { Attributes, Span, trace } from "@cloudydeno/opentelemetry/pkg/api";
 export { LogicTracer, trace, type Span };
 
-import { DenoTelemetrySdk } from "@cloudydeno/opentelemetry/sdk";
-
-new DenoTelemetrySdk({
-  resourceAttrs: {
-    'service.name': 'aws-api',
-  },
-});
-
 const logicWrap = new LogicTracer({
   name: 'logic-wrap',
   requireParent: false,
