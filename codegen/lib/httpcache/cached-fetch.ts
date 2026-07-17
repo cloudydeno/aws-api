@@ -1,4 +1,5 @@
 import { LogicTracer } from "@cloudydeno/opentelemetry/instrumentation/async.ts";
+import type { Span } from "@cloudydeno/opentelemetry/pkg/api";
 
 import type { Cache } from "./base.ts";
 import { inMemoryCache } from "./in_memory.ts";

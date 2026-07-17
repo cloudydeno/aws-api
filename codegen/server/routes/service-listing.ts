@@ -1,4 +1,4 @@
-import { SDK } from "../sdk-datasource.ts";
+import { SdkGithubFetcher, cachedFetch } from "@cloudydeno/aws-codegen/sdk-fetcher/from-github.ts";
 import { Generations } from "../generations.ts";
 import { escapeTemplate, getModuleIdentity, Pattern, ResponseRedirect, ResponseText, RouteHandler } from "../helpers.ts";
 
@@ -29,7 +29,7 @@ export async function renderServiceListing(props: {
     `Codegen version '${props.genVer}' not found.\nKnown versions: ${Array.from(Generations.keys()).join(', ')}`);
 
   const sdkVersion = props.sdkVer || generation.sdkVersion;
-  const sdk = new SDK(sdkVersion);
+  const sdk = new SdkGithubFetcher(cachedFetch, sdkVersion);
 
   const modRoot = `/${props.genVer}/${props.sdkVer ? `sdk@${sdkVersion}` : 'services'}`;
   const baseUrl = new URL(modRoot, props.selfUrl).toString();
