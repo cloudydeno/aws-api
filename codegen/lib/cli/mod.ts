@@ -1,7 +1,7 @@
 import { join as joinPath } from "@std/path/join";
 import { parse as parseYaml } from '@std/yaml';
-import { SdkGithubFetcher, cachedFetch } from "@cloudydeno/aws-codegen/sdk-fetcher/from-github.ts";
-import ServiceCodeGen from "@cloudydeno/aws-codegen/code-gen.ts";
+import { SdkGithubFetcher, cachedFetch } from "../sdk-fetcher/from-github.ts";
+import ServiceCodeGen from "../code-gen.ts";
 
 if (Deno.args.length != 0) {
   throw 'Arguments not required';
