@@ -200,7 +200,8 @@ jobs:
         restore-keys: deno/${{ matrix.deno-version }}-https/v1-
 
     - name: Regenerate API files
-      run: time ./codegen/script/update-all.sh
+      working-directory: lib
+      run: deno run --allow-read=. --allow-write=services --allow-net @cloudydeno/aws-codegen/cli
 
     - name: Perhaps create PR
       uses: peter-evans/create-pull-request@v8
