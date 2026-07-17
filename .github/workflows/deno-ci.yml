@@ -33,8 +33,8 @@ jobs:
       uses: actions/cache@v5
       with:
         path: ~/.cache/deno
-        key: deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
-        restore-keys: deno/${{ matrix.deno-version }}-https/v1-
+        key: build-deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
+        restore-keys: build-deno/${{ matrix.deno-version }}-https/v1-
 
     - name: 'Possibly reset lockfile'
       run: deno install || rm deno.lock
@@ -116,8 +116,8 @@ jobs:
       uses: actions/cache@v5
       with:
         path: ~/.cache/deno
-        key: deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
-        restore-keys: deno/${{ matrix.deno-version }}-https/v1-
+        key: server-deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
+        restore-keys: server-deno/${{ matrix.deno-version }}-https/v1-
 
     - name: 'Possibly reset lockfile'
       run: deno install || rm deno.lock
@@ -155,8 +155,8 @@ jobs:
       uses: actions/cache@v5
       with:
         path: ~/.cache/deno
-        key: deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
-        restore-keys: deno/${{ matrix.deno-version }}-https/v1-
+        key: codegen-deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
+        restore-keys: codegen-deno/${{ matrix.deno-version }}-https/v1-
 
     - name: 'Possibly reset lockfile'
       run: deno install || rm deno.lock
@@ -196,8 +196,8 @@ jobs:
       uses: actions/cache@v5
       with:
         path: ~/.cache/deno
-        key: deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
-        restore-keys: deno/${{ matrix.deno-version }}-https/v1-
+        key: codegen-deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
+        restore-keys: codegen-deno/${{ matrix.deno-version }}-https/v1-
 
     - name: Regenerate API files
       working-directory: lib

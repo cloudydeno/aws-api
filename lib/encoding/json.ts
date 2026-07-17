@@ -1,4 +1,4 @@
-import type { ByteArray } from "@cloudydeno/aws-api/client/common.ts";
+import type { ByteArray } from "../client/common.ts";
 
 // Things that JSON can encode directly
 export type JSONPrimitive = string | number | boolean | null | undefined;
