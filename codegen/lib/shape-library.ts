@@ -150,7 +150,7 @@ export class KnownShape {
     this.payloadField = this.spec.payload;
   }
   payloadField?: string;
-  tags = new Set<ShapeTag>();
+  tags: Set<ShapeTag> = new Set;
   refCount = 0;
 
   get censoredName(): string {
@@ -159,7 +159,7 @@ export class KnownShape {
     return this.name;
   }
 
-  get isNumberType() {
+  get isNumberType(): boolean {
     return ['integer', 'float', 'double', 'long'].includes(this.spec.type);
   }
 

@@ -14,7 +14,7 @@ const tracer = new LogicTracer({
   name: 'cached-fetch',
 });
 
-export async function cachedFetch(mode: 'immutable' | 'mutable', label: string, url: string) {
+export async function cachedFetch(mode: 'immutable' | 'mutable', label: string, url: string): Promise<Response> {
   return await tracer.asyncSpan(`fetch ${label}`, {
     attributes: {
       'cache.label': label,

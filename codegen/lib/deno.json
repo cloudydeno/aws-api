@@ -5,6 +5,7 @@
   "exports": {
     "./cli": "./cli/mod.ts",
     "./code-gen.ts": "./code-gen.ts",
+    "./shape-library.ts": "./shape-library.ts",
     "./sdk-fetcher/from-github.ts": "./sdk-fetcher/from-github.ts",
     "./sdk-fetcher/from-filesystem.ts": "./sdk-fetcher/from-filesystem.ts",
     "./sdk-schema.ts": "./sdk-schema.ts"
