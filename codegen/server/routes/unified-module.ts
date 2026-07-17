@@ -1,6 +1,6 @@
-import { SDK } from "../sdk-datasource.ts";
-import { Generations, ModuleGenerator } from "../generations.ts";
-import { ClientError, escapeTemplate, getModuleIdentity, jsonTemplate, Pattern, ResponseRedirect, ResponseText, RouteHandler, acceptsHtml } from "../helpers.ts";
+import { Generations } from "../generations.ts";
+import { SdkGithubFetcher, cachedFetch } from "@cloudydeno/aws-codegen/sdk-fetcher/from-github.ts";
+import { ClientError, getModuleIdentity, Pattern, ResponseText, RouteHandler, acceptsHtml } from "../helpers.ts";
 
 const handleRequest: RouteHandler = ctx => {
   const {genVer, sdkVer} = ctx.params;
@@ -52,7 +52,7 @@ export async function renderUnifiedModule(props: {
 
   const fullMutuals = generation.withDefaults(mutualProps);
 
-  const sdk = new SDK(sdkVersion);
+  const sdk = new SdkGithubFetcher(cachedFetch, sdkVersion);
   const serviceList = await sdk.getServiceList();
 
   return new Response(`// EXPERIMENTAL!

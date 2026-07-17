@@ -1,7 +1,7 @@
 // Downloaded from https://deno.land/x/httpcache@0.1.2/in_memory.ts
 
 import { LruCache } from "@std/cache/lru-cache";
-import { Cache, CachedResponse } from "./base.ts";
+import { Cache, type CachedResponse } from "./base.ts";
 export { Cache };
 
 export function inMemoryCache(capacity: number): Cache {

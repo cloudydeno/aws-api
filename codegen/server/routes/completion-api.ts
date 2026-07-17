@@ -7,7 +7,7 @@
 
 import { Generations } from "../generations.ts";
 import { Pattern, ResponseJson, RouteHandler } from "../helpers.ts";
-import { SDK } from "../sdk-datasource.ts";
+import { SdkGithubFetcher, cachedFetch } from "@cloudydeno/aws-codegen/sdk-fetcher/from-github.ts";
 
 export const routeMap = new Map<string | URLPattern, RouteHandler>([
 
@@ -18,7 +18,7 @@ export const routeMap = new Map<string | URLPattern, RouteHandler>([
   }],
 
   ['/.completions/sdks/list.json', async () => {
-    const versions = await SDK.getSdkVersions();
+    const versions = await SdkGithubFetcher.getSdkVersions(cachedFetch);
     return ResponseJson(versions.map(x => x.name));
   }],
 
@@ -35,7 +35,7 @@ export const routeMap = new Map<string | URLPattern, RouteHandler>([
 ]);
 
 async function listSdkModules(sdkVersion: string) {
-  const sdk = new SDK(sdkVersion);
+  const sdk = new SdkGithubFetcher(cachedFetch, sdkVersion);
   const serviceDict = await sdk.getServiceList();
 
   const serviceList = Object.keys(serviceDict).sort();

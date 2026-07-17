@@ -1,4 +1,4 @@
-import { SDK } from "../sdk-datasource.ts";
+import { SdkGithubFetcher, cachedFetch } from "@cloudydeno/aws-codegen/sdk-fetcher/from-github.ts";
 import { Generations, ModuleGenerator } from "../generations.ts";
 import { ClientError, escapeTemplate, getModuleIdentity, jsonTemplate, Pattern, ResponseText, RouteHandler, acceptsHtml } from "../helpers.ts";
 import { Api, Examples, Pagination, ServiceMetadata, Waiters } from "@cloudydeno/aws-codegen/sdk-schema.ts";
@@ -47,7 +47,7 @@ type ApiBundle = {
 }
 
 async function loadApiDefinitions(props: {
-  sdk: SDK;
+  sdk: SdkGithubFetcher;
   service: string;
   apiVersion: string;
 }) {
@@ -83,7 +83,9 @@ export async function renderServiceModule(props: {
     `Codegen version '${props.genVer}' not found.\nKnown versions: ${Array.from(Generations.keys()).join(', ')}`);
 
   const sdkVersion = props.sdkVer || generation.sdkVersion;
-  const apiVersion = props.svcVer || await new SDK(sdkVersion).getLatestApiVersion(props.service);
+  const sdk = new SdkGithubFetcher(cachedFetch, sdkVersion);
+
+  const apiVersion = props.svcVer || await sdk.getLatestApiVersion(props.service);
   const fullOptions = generation.withDefaults(props.params);
 
   span?.setAttributes({
@@ -95,7 +97,6 @@ export async function renderServiceModule(props: {
     'request.action_filter': fullOptions.get('actions')?.split(','),
   });
 
-  const sdk = new SDK(sdkVersion);
   const serviceList = await sdk.getServiceList();
 
   const {module, spec} = await loadApiDefinitions({

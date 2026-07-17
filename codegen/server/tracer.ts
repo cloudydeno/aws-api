@@ -1,5 +1,3 @@
-export { httpTracer } from "@cloudydeno/opentelemetry/instrumentation/http-server.ts";
-
 import { LogicTracer } from "@cloudydeno/opentelemetry/instrumentation/async.ts";
 import { Attributes, Span, trace } from "@cloudydeno/opentelemetry/pkg/api";
 export { LogicTracer, trace, type Span };
