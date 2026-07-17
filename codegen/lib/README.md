@@ -1,11 +1,11 @@
 # Client Code Generation for AWS APIs
 
-Strictly speaking, this entire folder is implementation detail of the `/x/aws_api` module.
+This module is largely an implementation detail of the `@cloudydeno/aws-api` project.
 
-Note that aws-sdk-js v2 is scheduled for end-of-life, and as such, this module might need porting to the Smithy definitions used by the next-gen AWS SDKs.
+The only public entrypoint is: `deno run @cloudydeno/aws-codegen/cli`
 
-## Module Layout
+For more information, see [@cloudydeno/aws-api](https://jsr.io/@cloudydeno/aws-api).
 
-* The top level contains logic to produce service clients from the definitions of aws-sdk-js v2.
-* `script/` contains the scripts that I use to generate tests and rebuild the pre-generated clients.
-* `deploy/` contains a Deno Deploy service to serve generated code, deployed to https://aws-api.deno.dev
+## Future
+
+Note that aws-sdk-js v2 is end-of-life, and as such, this module might need porting to the Smithy definitions used by the next-gen AWS SDKs.

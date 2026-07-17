@@ -1,0 +1,3 @@
+# Don't check the example into git
+# In reality you shouldn't do this, you should commit the generated code
+lib

@@ -1,0 +1,25 @@
+# This file is processed by running:
+# deno run --allow-read=. --allow-write=services --allow-net @cloudydeno/aws-codegen/cli
+
+outDir: lib
+
+opts:
+  docs: short
+
+services:
+
+  sts:
+    # This module includes full documentation text for each API call
+    opts:
+      docs: full
+
+  ec2:
+    # This module only includes one specific API call
+    actions:
+      - DescribeInstances
+
+  sqs:
+
+  sns:
+
+  s3:

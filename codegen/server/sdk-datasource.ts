@@ -1,5 +1,5 @@
 import type * as Schema from '../lib/sdk-schema.ts';
-import { cachedFetch } from "./cache.ts";
+import { cachedFetch } from "../lib/httpcache/cached-fetch.ts";
 import { ClientError, jsonTemplate } from "./helpers.ts";
 import { runAsyncSpan } from "./tracer.ts";
 

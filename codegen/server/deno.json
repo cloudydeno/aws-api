@@ -1,5 +1,4 @@
 {
   "imports": {
-    "http-cache-semantics": "npm:http-cache-semantics@4.2.0"
   }
 }

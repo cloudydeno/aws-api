@@ -1,5 +1,5 @@
 import { ApiFactory } from '../client/mod.ts';
-import { CloudTrail } from 'https://aws-api.deno.dev/v0.3/services/cloudtrail.ts';
+import { CloudTrail } from 'https://aws-api.danopia.deno.net/v0.3/services/cloudtrail.ts';
 const cloudTrail = new ApiFactory().makeNew(CloudTrail);
 
 // Fetch most recent non-readonly operations from past 90 days

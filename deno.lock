@@ -22,6 +22,7 @@
     "jsr:@std/io@0.225": "0.225.2",
     "jsr:@std/path@1": "1.1.2",
     "jsr:@std/streams@^1.0.9": "1.0.12",
+    "jsr:@std/yaml@^1.1.2": "1.1.2",
     "jsr:@takker/md5@0.1": "0.1.0",
     "jsr:@takker/md5@0.1.0": "0.1.0",
     "npm:http-cache-semantics@4.2.0": "4.2.0"
@@ -102,6 +103,9 @@
       "dependencies": [
         "jsr:@std/bytes@^1.0.6"
       ]
+    },
+    "@std/yaml@1.1.2": {
+      "integrity": "de612653c036749ba2044165e316f52412b0f0698afffb7ee80b5331d6d2abae"
     },
     "@takker/md5@0.1.0": {
       "integrity": "4c423d8247aadf7bcb1eb83c727bf28c05c21906e916517395d00aa157b6eae0"
@@ -204,8 +208,9 @@
       "jsr:@std/path@1"
     ],
     "members": {
-      "codegen/server": {
+      "codegen/lib": {
         "dependencies": [
+          "jsr:@std/yaml@^1.1.2",
           "npm:http-cache-semantics@4.2.0"
         ]
       },

@@ -82,11 +82,25 @@ These include S3, DynamoDB, Lambda, S3, and SQS/SNS.
 There's also CloudWatch, ECR, Kinesis, KMS, Route53, SES, and STS.
 
 For other services, or to cut down on dependency size by selecting the available actions,
-you can import from [the /x/aws_api Web Service][webservice]:
+you can create an `aws-api.yaml` file to customize your own client library:
+
+```yaml
+outDir: lib/vendor/aws-api # or wherever you'd like
+services:
+  dynamodb: # Include entire API
+  pricing:
+    # Select particular API actions
+    actions:
+      - Describe*
+```
+
+Then run `deno run --allow-read=. --allow-write=. --allow-net @cloudydeno/aws-codegen/cli`.
+
+Or, you can import from [the aws-api Web Service][webservice]:
 
 ```typescript
 import { ApiFactory } from '@cloudydeno/aws-api/client';
-import { Pricing } from 'https://aws-api.deno.dev/latest/services/pricing.ts';
+import { Pricing } from 'https://aws-api.danopia.deno.net/latest/services/pricing.ts?actions=DescribeServices';
 
 const pricing = new ApiFactory().makeNew(Pricing);
 const { Services } = await pricing.describeServices('AmazonEC2');
@@ -120,6 +134,10 @@ const ec2_europe = new ApiFactory({
 
 ## Changelog
 
+* `v0.10.0` on `2026-07-17`:
+  * Introduce `aws-api.yaml` for vendoring generated files
+  * Replace `aws-api.deno.dev` references with `aws-api.danopia.deno.net`
+  * Account for `Uint8Array` changes in Typescript
 * `v0.9.0` on `2025-09-15`: Migrate to JSR packaging and imports, targetting Deno 2+
 * `v0.8.1` on `2023-02-26`: hotfixes in extras files
 * `v0.8.0` on `2023-02-26`: codegen `v0.4`
@@ -258,30 +276,16 @@ Multiple bits are *missing*:
 * Automatic retries
 * Getting EKS credentials from regional STS endpoints (#2)
 
-### List of Pre-Generated API Clients
+### Pre-Generated API Clients
 
-[//]: # (Generated Content Barrier)
+Several popular services have client modules pregenerated in the `services/` folder.
 
-All API definitions are current as of [aws-sdk-js `v2.1693.0`](https://github.com/aws/aws-sdk-js/releases/tag/v2.1693.0).
+For any other services, you can either:
 
-| Class | Module | Protocol |
-| --- | --- | --- |
-| `CloudWatch` | `cloudwatch/mod.ts` | query |
-| `DynamoDB` | `dynamodb/mod.ts` | json |
-| `ECR` | `ecr/mod.ts` | json |
-| `Kinesis` | `kinesis/mod.ts` | json |
-| `KMS` | `kms/mod.ts` | json |
-| `Lambda` | `lambda/mod.ts` | rest-json |
-| `Route53` | `route53/mod.ts` | rest-xml |
-| `S3` | `s3/mod.ts` | rest-xml |
-| `SESV2` | `sesv2/mod.ts` | rest-json |
-| `SNS` | `sns/mod.ts` | query |
-| `SQS` | `sqs/mod.ts` | query |
-| `STS` | `sts/mod.ts` | query |
+* Create an `aws-api.yaml` file in your repo and run `@cloudydeno/aws-codegen/cli` to create the service API modules.
+  See `
 
-[//]: # (Generated Content Barrier)
-
-For any other services, please check out [the code generation web service][webservice]
+please check out [the code generation web service][webservice]
 which performs on-the-fly code generation.
 You can import the generated URL directly in your application,
 or download a copy of the file and save it in your source code for safe keeping.
@@ -290,7 +294,7 @@ The last version of this library to include every then-current API client
 on `/x/` is [v0.3.1](https://deno.land/x/aws_api@v0.3.1).
 
 [webservice-docs]: https://github.com/cloudydeno/deno-aws_api/wiki/Web-Service
-[webservice]: https://aws-api.deno.dev/latest/
+[webservice]: https://aws-api.danopia.deno.net/latest/
 
 
 ## Breaking Changes Archive

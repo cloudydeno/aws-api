@@ -28,12 +28,27 @@ export default class ServiceCodeGen {
   awsApiRoot: string | null;
   shapes: ShapeLibrary;
 
-  static async loadFromSdk(sdk: SdkFetcher, serviceId: string, serviceVersion: string, opts: URLSearchParams) {
+  static async loadFromSdk(sdk: SdkFetcher, serviceId: string, serviceVersion: string, opts: URLSearchParams): Promise<ServiceCodeGen> {
     const apiSpecs = await sdk.getApiSpecs(serviceId, serviceVersion, {
       normal: 'required',
       paginators: 'optional',
       waiters2: 'optional',
     });
+
+    const actionList = opts.get('actions')?.split(',') ?? [];
+    if (actionList.length) {
+      const allOps = Object.entries(apiSpecs.normal.operations);
+      const patternList = actionList.map(buildMatchRule);
+      apiSpecs.normal.operations = {};
+      for (const [key, op] of allOps) {
+        if (patternList.some(x => x.test(key))) {
+          apiSpecs.normal.operations[key] = op;
+        }
+      }
+      const afterCount = Object.keys(apiSpecs.normal.operations).length;
+      if (afterCount == 0) throw new Error(
+        `No ${serviceId} actions matched the given filter ${opts.get('actions')}`);
+    }
 
     const codeGen = new ServiceCodeGen({
       api: apiSpecs.normal,
@@ -193,4 +208,10 @@ export default class ServiceCodeGen {
     ].filter(x => x).join('\n\n');
   }
 
+}
+
+// https://stackoverflow.com/a/32402438
+const escapeRegex = (str: string) => str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+function buildMatchRule(rule: string) {
+  return new RegExp("^" + rule.split("*").map(escapeRegex).join(".*") + "$");
 }

@@ -1,6 +1,6 @@
 {
   "name": "@cloudydeno/aws-api",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "license": "Apache-2.0",
   "imports": {
     "@cloudydeno/stream-observables": "jsr:@cloudydeno/stream-observables@^1.5",

@@ -1,8 +1,8 @@
-import { LogicTracer, Span } from "./tracer.ts";
+import { LogicTracer, Span } from "../../server/tracer.ts";
 
-import type { Cache } from "./httpcache/mod.ts";
-import { inMemoryCache } from "./httpcache/in_memory.ts";
-import { platformCache } from "./httpcache/platform.ts";
+import type { Cache } from "./base.ts";
+import { inMemoryCache } from "./in_memory.ts";
+import { platformCache } from "./platform.ts";
 
 const caches: Array<Cache> = [
   inMemoryCache(40),
@@ -71,7 +71,7 @@ async function cachedFetchInner(mode: 'immutable' | 'mutable', url: string, span
   });
 
   const realResp = await fetch(url);
-  console.log('fetched', realResp.status, url);
+  // console.log('fetched', realResp.status, url);
 
   const resp = new Response(realResp.body, realResp);
 

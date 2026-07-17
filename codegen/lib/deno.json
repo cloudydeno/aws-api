@@ -3,7 +3,14 @@
   "version": "0.9.0",
   "license": "Apache-2.0",
   "exports": {
+    "./cli": "./cli/mod.ts",
+    "./code-gen.ts": "./code-gen.ts",
     "./sdk-fetcher/from-github.ts": "./sdk-fetcher/from-github.ts",
+    "./sdk-fetcher/from-filesystem.ts": "./sdk-fetcher/from-filesystem.ts",
     "./sdk-schema.ts": "./sdk-schema.ts"
+  },
+  "imports": {
+    "@std/yaml": "jsr:@std/yaml@^1.1.2",
+    "http-cache-semantics": "npm:http-cache-semantics@4.2.0"
   }
 }

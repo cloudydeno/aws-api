@@ -1,0 +1,38 @@
+# Process with:
+# deno run --allow-read=. --allow-write=services --allow-net @cloudydeno/aws-codegen/cli
+
+# Where the vendored modules will be placed
+outDir: services
+
+# For legacy purposes, we separate structs.ts from mod.ts in this repo
+# Within your own repo you probably don't need this
+emitServiceDirs: true
+
+# Inputs to the codegen logic
+# Equates to URL query parameters in the codegen's HTTP API
+opts:
+
+  # Replace @cloudydeno/aws-api imports with relative paths
+  # Within your own repo you shouldn't want this
+  aws_api_root: '../..'
+
+  # Exclude all documentation comments
+  # Options are: none / short / full
+  docs: none
+
+# List of services to generate modules for
+# Within each block, you can specify a list of actions to reduce file size
+services:
+  cloudwatch:
+    actions: ['*'] # Explicitly include all actions
+  dynamodb:
+  ecr:
+  kinesis:
+  kms:
+  lambda:
+  route53:
+  s3:
+  sesv2:
+  sns:
+  sqs:
+  sts:

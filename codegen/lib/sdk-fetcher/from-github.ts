@@ -1,6 +1,7 @@
 import type * as Schema from '../sdk-schema.ts';
 import type { ApiSpecPolicy, ApiSpecSet, SdkFetcher } from "./types.ts";
 import { BaseSdkFetcher } from "./base.ts";
+export { cachedFetch } from '../httpcache/cached-fetch.ts';
 
 const specSuffix = `.normal.json`;
 

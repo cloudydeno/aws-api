@@ -5,7 +5,7 @@
  */
 
 import { ApiFactory } from '../client/mod.ts';
-import { Pricing } from 'https://aws-api.deno.dev/v0.3/services/pricing.ts';
+import { Pricing } from 'https://aws-api.danopia.deno.net/v0.3/services/pricing.ts';
 
 const pricing = new ApiFactory().makeNew(Pricing);
 
