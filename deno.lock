@@ -1,7 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@cloudydeno/jmespath@1": "1.0.1",
+    "jsr:@cloudydeno/jmespath@^1.0.1": "1.0.1",
     "jsr:@cloudydeno/opentelemetry@~0.11.1": "0.11.1",
     "jsr:@cloudydeno/stream-observables@^1.5.0": "1.5.0",
     "jsr:@sallai/ask@^2.0.2": "2.0.2",
@@ -192,7 +192,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@cloudydeno/jmespath@1",
+      "jsr:@cloudydeno/jmespath@^1.0.1",
       "jsr:@cloudydeno/opentelemetry@~0.11.1",
       "jsr:@std/assert@1",
       "jsr:@std/cache@0.2",
