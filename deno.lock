@@ -2,8 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@cloudydeno/jmespath@1": "1.0.1",
-    "jsr:@cloudydeno/opentelemetry@0.10": "0.10.3",
-    "jsr:@cloudydeno/shimmer@1.2.1": "1.2.1",
+    "jsr:@cloudydeno/opentelemetry@~0.11.1": "0.11.1",
     "jsr:@cloudydeno/stream-observables@^1.5.0": "1.5.0",
     "jsr:@sallai/ask@^2.0.2": "2.0.2",
     "jsr:@sallai/iro@^1.0.3": "1.0.4",
@@ -31,14 +30,8 @@
     "@cloudydeno/jmespath@1.0.1": {
       "integrity": "de46849bf1dea8819bb2c6f574f2ca7faf25d14c36675407df797cccf76bf354"
     },
-    "@cloudydeno/opentelemetry@0.10.3": {
-      "integrity": "a678c8cac0853b6097ad0291274a60baa185a377cb9c34fc2340836c58644345",
-      "dependencies": [
-        "jsr:@cloudydeno/shimmer"
-      ]
-    },
-    "@cloudydeno/shimmer@1.2.1": {
-      "integrity": "6d7cf8ba798532a9beb963937977e28e26dbd4e020b38f828a411aaacb34c3b2"
+    "@cloudydeno/opentelemetry@0.11.1": {
+      "integrity": "fcf3bec43e13170b40b0a22dc1212dd28b7c0bbd153e6b307275848444a276e2"
     },
     "@cloudydeno/stream-observables@1.5.0": {
       "integrity": "1fb2c5149186a7947e969da35294439c86aa44806f661d97ed2e81f63d87f8ba"
@@ -200,7 +193,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@cloudydeno/jmespath@1",
-      "jsr:@cloudydeno/opentelemetry@0.10",
+      "jsr:@cloudydeno/opentelemetry@~0.11.1",
       "jsr:@std/assert@1",
       "jsr:@std/cache@0.2",
       "jsr:@std/csv@1",
