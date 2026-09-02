@@ -9,7 +9,7 @@
     "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/async@^1.5.0": "1.5.0",
     "jsr:@std/bytes@^1.0.6": "1.0.6",
-    "jsr:@std/cache@~0.2.3": "0.2.3",
+    "jsr:@std/cache@~0.2.4": "0.2.4",
     "jsr:@std/cli@^1.0.32": "1.0.32",
     "jsr:@std/csv@^1.0.6": "1.0.6",
     "jsr:@std/data-structures@^1.1.1": "1.1.1",
@@ -21,7 +21,7 @@
     "jsr:@std/io@0.225": "0.225.3",
     "jsr:@std/path@^1.1.6": "1.1.6",
     "jsr:@std/streams@^1.0.9": "1.1.1",
-    "jsr:@std/yaml@^1.1.2": "1.1.2",
+    "jsr:@std/yaml@^1.2.0": "1.2.0",
     "jsr:@takker/md5@0.1": "0.1.0",
     "jsr:@takker/md5@0.1.0": "0.1.0",
     "npm:http-cache-semantics@4.2.0": "4.2.0"
@@ -61,8 +61,8 @@
     "@std/bytes@1.0.6": {
       "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
     },
-    "@std/cache@0.2.3": {
-      "integrity": "4e0bcab2e61f7c5637937bfe2bb13ccdd15e4dc3092beb14b78726bea8c49916"
+    "@std/cache@0.2.4": {
+      "integrity": "3786a6961a8a851c651f6fa4c39d46e7ce9c098630689655ea53e5143eb3565b"
     },
     "@std/cli@1.0.32": {
       "integrity": "188b3a100d6202d64e3f5bd3d799c7fa4f6d77f92cc65eb7f641c1fa0aa92a66",
@@ -110,8 +110,8 @@
         "jsr:@std/bytes"
       ]
     },
-    "@std/yaml@1.1.2": {
-      "integrity": "de612653c036749ba2044165e316f52412b0f0698afffb7ee80b5331d6d2abae"
+    "@std/yaml@1.2.0": {
+      "integrity": "20beb41e4983ba3437dbefac62b14061ab058e8a187596f19d28ff9035f6e6cf"
     },
     "@takker/md5@0.1.0": {
       "integrity": "4c423d8247aadf7bcb1eb83c727bf28c05c21906e916517395d00aa157b6eae0"
@@ -208,7 +208,7 @@
       "jsr:@cloudydeno/jmespath@^1.0.1",
       "jsr:@cloudydeno/opentelemetry@~0.11.1",
       "jsr:@std/assert@^1.0.19",
-      "jsr:@std/cache@~0.2.3",
+      "jsr:@std/cache@~0.2.4",
       "jsr:@std/csv@^1.0.6",
       "jsr:@std/html@^1.0.7",
       "jsr:@std/path@^1.1.6"
@@ -216,7 +216,7 @@
     "members": {
       "codegen/lib": {
         "dependencies": [
-          "jsr:@std/yaml@^1.1.2",
+          "jsr:@std/yaml@^1.2.0",
           "npm:http-cache-semantics@4.2.0"
         ]
       },

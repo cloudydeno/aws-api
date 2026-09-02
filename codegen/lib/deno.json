@@ -11,7 +11,7 @@
     "./sdk-schema.ts": "./sdk-schema.ts"
   },
   "imports": {
-    "@std/yaml": "jsr:@std/yaml@^1.1.2",
+    "@std/yaml": "jsr:@std/yaml@^1.2.0",
     "http-cache-semantics": "npm:http-cache-semantics@4.2.0"
   }
 }
