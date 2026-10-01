@@ -7,12 +7,12 @@
     "jsr:@sallai/ask@^2.0.2": "2.0.2",
     "jsr:@sallai/iro@^1.0.3": "1.0.4",
     "jsr:@std/assert@^1.0.19": "1.0.19",
-    "jsr:@std/async@^1.5.0": "1.5.0",
+    "jsr:@std/async@^1.5.1": "1.5.1",
     "jsr:@std/bytes@^1.0.6": "1.0.6",
     "jsr:@std/cache@~0.2.4": "0.2.4",
     "jsr:@std/cli@^1.0.32": "1.0.32",
     "jsr:@std/csv@^1.0.6": "1.0.6",
-    "jsr:@std/data-structures@^1.1.1": "1.1.1",
+    "jsr:@std/data-structures@^1.1.3": "1.1.3",
     "jsr:@std/encoding@^1.0.11": "1.0.11",
     "jsr:@std/fmt@^1.0.10": "1.0.10",
     "jsr:@std/html@^1.0.7": "1.0.7",
@@ -21,7 +21,7 @@
     "jsr:@std/io@0.225": "0.225.3",
     "jsr:@std/path@^1.1.6": "1.1.6",
     "jsr:@std/streams@^1.0.9": "1.1.1",
-    "jsr:@std/yaml@^1.2.0": "1.2.0",
+    "jsr:@std/yaml@^1.3.0": "1.3.0",
     "jsr:@takker/md5@0.1": "0.1.0",
     "jsr:@takker/md5@0.1.0": "0.1.0",
     "npm:http-cache-semantics@4.2.0": "4.2.0"
@@ -52,8 +52,8 @@
         "jsr:@std/internal@^1.0.12"
       ]
     },
-    "@std/async@1.5.0": {
-      "integrity": "4c1f22d287a17ad7d8643b1952bc5a4d21e5d8b68dc8c20d8268eecc69096e82",
+    "@std/async@1.5.1": {
+      "integrity": "c82455dc70cab29a0adf3ac8075db934785bffdd3902af5afcf25d21a74cfd86",
       "dependencies": [
         "jsr:@std/data-structures"
       ]
@@ -77,8 +77,8 @@
         "jsr:@std/streams"
       ]
     },
-    "@std/data-structures@1.1.1": {
-      "integrity": "7e1fcf19771fb9c6dbcd7f65039d6d42ef8dc023cfbc0c4cdc74b24e09229380"
+    "@std/data-structures@1.1.3": {
+      "integrity": "a5ec67199e79ee5b29123474d93fa9a47701ec08a4ef3bd1b623a36476306c5b"
     },
     "@std/encoding@1.0.11": {
       "integrity": "e7cef2f0b3153bccc17431e7c864a1de03a4b6d9647389c43e08aaa775d37385"
@@ -110,8 +110,8 @@
         "jsr:@std/bytes"
       ]
     },
-    "@std/yaml@1.2.0": {
-      "integrity": "20beb41e4983ba3437dbefac62b14061ab058e8a187596f19d28ff9035f6e6cf"
+    "@std/yaml@1.3.0": {
+      "integrity": "b250103854378b8b36cbff0fe95aec017d3d9ce86b489c67605180c602fb4922"
     },
     "@takker/md5@0.1.0": {
       "integrity": "4c423d8247aadf7bcb1eb83c727bf28c05c21906e916517395d00aa157b6eae0"
@@ -216,7 +216,7 @@
     "members": {
       "codegen/lib": {
         "dependencies": [
-          "jsr:@std/yaml@^1.2.0",
+          "jsr:@std/yaml@^1.3.0",
           "npm:http-cache-semantics@4.2.0"
         ]
       },
@@ -225,7 +225,7 @@
           "jsr:@cloudydeno/stream-observables@^1.5.0",
           "jsr:@sallai/ask@^2.0.2",
           "jsr:@std/assert@^1.0.19",
-          "jsr:@std/async@^1.5.0",
+          "jsr:@std/async@^1.5.1",
           "jsr:@std/cli@^1.0.32",
           "jsr:@std/encoding@^1.0.11",
           "jsr:@takker/md5@0.1"
